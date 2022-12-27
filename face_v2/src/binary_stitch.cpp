@@ -1,15 +1,15 @@
 #include "binary_stitch.h"
 
 int * convertToBinary(int n) {
-    static int a[6];
+    static int a[4];
     int i;
     for(i=0; n>0; i++)    
     {    
         a[i]={n%2};    
         n= n/2;
     }
-    if(i != 5){
-        for(;i<6; i++){
+    if(i != 4){
+        for(;i<5; i++){
             a[i]=0;
         }
     }
@@ -17,56 +17,97 @@ int * convertToBinary(int n) {
 }
 
 void BinaryStitch::drawWatchFace(){
-    const int lineLength = 27, space = 24;
+    const int lineLength = 22, space = 19;
     display.fillScreen(GxEPD_BLACK);
     display.setTextColor(GxEPD_WHITE);
-    display.setFont(&Px437_IBM_BIOS10pt7b);
-    int *hourArr;
-    hourArr = convertToBinary(currentTime.Hour);
-    display.setCursor(20, 20);
+    display.setFont(&Px437_IBM_BIOS8pt7b);
+    int *hourArrFstDigit, *hourArrScndDigit;
+    hourArrFstDigit = convertToBinary(currentTime.Hour/10);
     int hourPositionCount = 0;
-    // Drawing hour lines
-    for(int i=5; i>=0; i--){
-        display.setCursor(45 + 25*hourPositionCount, 30);
-        display.print(hourArr[i]);
-        for(int j=0; j<6; j++){
-            if(hourArr[i] == 1){
+    for(int i = 3; i>=0; i--){
+        display.setCursor(35 + 20*hourPositionCount, 23);
+        display.print(hourArrFstDigit[i]);
+        for(int j=0; j<8; j++){
+            if(hourArrFstDigit[i] == 1){
                 if(j%2 == 0){
-                   display.writeFastVLine(55 + space*hourPositionCount, 34+space*j, lineLength, GxEPD_WHITE);
-                   display.writeFastVLine(56 + space*hourPositionCount, 34+space*j, lineLength, GxEPD_WHITE);
-                   display.writeFastVLine(57 + space*hourPositionCount, 34+space*j, lineLength, GxEPD_WHITE);
+                   display.writeFastVLine(45 + space*hourPositionCount, 26+space*j, lineLength, GxEPD_WHITE);
+                   display.writeFastVLine(46 + space*hourPositionCount, 26+space*j, lineLength, GxEPD_WHITE);
+                   display.writeFastVLine(47 + space*hourPositionCount, 26+space*j, lineLength, GxEPD_WHITE);
                 }
             }
-            if(hourArr[i] == 0){
+            if(hourArrFstDigit[i] == 0){
                 if(j%2 != 0){
-                   display.writeFastVLine(55 + space*hourPositionCount, 34+space*j, lineLength, GxEPD_WHITE);
-                   display.writeFastVLine(56 + space*hourPositionCount, 34+space*j, lineLength, GxEPD_WHITE);
-                   display.writeFastVLine(57 + space*hourPositionCount, 34+space*j, lineLength, GxEPD_WHITE);
+                   display.writeFastVLine(45 + space*hourPositionCount, 26+space*j, lineLength, GxEPD_WHITE);
+                   display.writeFastVLine(46 + space*hourPositionCount, 26+space*j, lineLength, GxEPD_WHITE);
+                   display.writeFastVLine(47 + space*hourPositionCount, 26+space*j, lineLength, GxEPD_WHITE);
                 }
             }
         }
         hourPositionCount++;
     }
-    int *minuteArr;
-    minuteArr = convertToBinary(currentTime.Minute);
-    int minutePositionCount = 0;
-    // Drawing minute lines
-    for(int i=5; i>=0; i--){
-        display.setCursor(10, (40+25*(minutePositionCount+1)));
-        display.println(minuteArr[i]);
-        for(int j=0; j<6; j++){
-            if(minuteArr[i] == 1){
+    hourArrScndDigit = convertToBinary(currentTime.Hour%10);
+    for(int i = 3; i>=0; i--){
+        display.setCursor(35 + 20*hourPositionCount, 23);
+        display.print(hourArrScndDigit[i]);
+        for(int j=0; j<8; j++){
+            if(hourArrFstDigit[i] == 1){
                 if(j%2 == 0){
-                   display.writeFastHLine(31 + space*j, 58+space*minutePositionCount, lineLength, GxEPD_WHITE); 
-                   display.writeFastHLine(31 + space*j, 59+space*minutePositionCount, lineLength, GxEPD_WHITE); 
-                   display.writeFastHLine(31 + space*j, 60+space*minutePositionCount, lineLength, GxEPD_WHITE); 
+                   display.writeFastVLine(45 + space*hourPositionCount, 26+space*j, lineLength, GxEPD_WHITE);
+                   display.writeFastVLine(46 + space*hourPositionCount, 26+space*j, lineLength, GxEPD_WHITE);
+                   display.writeFastVLine(47 + space*hourPositionCount, 26+space*j, lineLength, GxEPD_WHITE);
                 }
             }
-            if(minuteArr[i] == 0){
+            if(hourArrFstDigit[i] == 0){
                 if(j%2 != 0){
-                   display.writeFastHLine(31 + space*j, 58+space*minutePositionCount, lineLength, GxEPD_WHITE); 
-                   display.writeFastHLine(31 + space*j, 59+space*minutePositionCount, lineLength, GxEPD_WHITE); 
-                   display.writeFastHLine(31 + space*j, 60+space*minutePositionCount, lineLength, GxEPD_WHITE); 
+                   display.writeFastVLine(45 + space*hourPositionCount, 26+space*j, lineLength, GxEPD_WHITE);
+                   display.writeFastVLine(46 + space*hourPositionCount, 26+space*j, lineLength, GxEPD_WHITE);
+                   display.writeFastVLine(47 + space*hourPositionCount, 26+space*j, lineLength, GxEPD_WHITE);
+                }
+            }
+        }
+        hourPositionCount++;
+    }
+    int *minuteArrFstDigit, *minuteArrScndDigit;
+    minuteArrFstDigit = convertToBinary(currentTime.Minute/10);
+    int minutePositionCount = 0;
+    for(int i = 3; i>=0; i--){
+        display.setCursor(9, 28+20*(minutePositionCount+1));
+        display.print(minuteArrFstDigit[i]);
+        for(int j=0; j<8; j++){
+            if(minuteArrFstDigit[i] == 1){
+                if(j%2 == 0){
+                   display.writeFastHLine(26 + space*j, 45+space*minutePositionCount, lineLength, GxEPD_WHITE); 
+                   display.writeFastHLine(26 + space*j, 46+space*minutePositionCount, lineLength, GxEPD_WHITE); 
+                   display.writeFastHLine(26 + space*j, 47+space*minutePositionCount, lineLength, GxEPD_WHITE); 
+                }
+            }
+            if(minuteArrFstDigit[i] == 0){
+                if(j%2 != 0){
+                   display.writeFastHLine(26 + space*j, 45+space*minutePositionCount, lineLength, GxEPD_WHITE); 
+                   display.writeFastHLine(26 + space*j, 46+space*minutePositionCount, lineLength, GxEPD_WHITE); 
+                   display.writeFastHLine(26 + space*j, 47+space*minutePositionCount, lineLength, GxEPD_WHITE); 
+                }
+            }
+        }
+        minutePositionCount++;
+    }
+    minuteArrScndDigit = convertToBinary(currentTime.Minute%10);
+    for(int i = 3; i>=0; i--){
+        display.setCursor(9, 28+20*(minutePositionCount+1));
+        display.print(minuteArrScndDigit[i]);
+        for(int j=0; j<8; j++){
+            if(minuteArrFstDigit[i] == 1){
+                if(j%2 == 0){
+                   display.writeFastHLine(26 + space*j, 45+space*minutePositionCount, lineLength, GxEPD_WHITE); 
+                   display.writeFastHLine(26 + space*j, 46+space*minutePositionCount, lineLength, GxEPD_WHITE); 
+                   display.writeFastHLine(26 + space*j, 47+space*minutePositionCount, lineLength, GxEPD_WHITE); 
+                }
+            }
+            if(minuteArrFstDigit[i] == 0){
+                if(j%2 != 0){
+                   display.writeFastHLine(26 + space*j, 45+space*minutePositionCount, lineLength, GxEPD_WHITE); 
+                   display.writeFastHLine(26 + space*j, 46+space*minutePositionCount, lineLength, GxEPD_WHITE); 
+                   display.writeFastHLine(26 + space*j, 47+space*minutePositionCount, lineLength, GxEPD_WHITE); 
                 }
             }
         }
