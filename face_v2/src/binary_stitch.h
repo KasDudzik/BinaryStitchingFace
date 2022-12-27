@@ -5,4 +5,6 @@ class BinaryStitch : public Watchy{
     using Watchy::Watchy;
     public:
         void drawWatchFace();
+        int drawHour(int, int);
+        int drawMinute(int, int);
 };
