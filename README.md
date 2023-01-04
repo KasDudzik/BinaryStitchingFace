@@ -13,12 +13,12 @@ There are two versions of this face:
 ### Basic Face
 This version translates decimal numbers representing current hour and minute into binary numbers.
 
-![preview](basic_preview.jpg)
+![preview](basic_preview.jpg =500x)
 
 ### Version Two
 This version individually translates every decimal digit representing current hour and minute into binary numbers. So first 4 bits are tens, and next 4 bits are units. It's easier to read than the Basic version. 
 
-![preview](v2_preview.jpg)
+![preview](v2_preview.jpg =500x)
 	
 ## Technologies
 Project is created with:
@@ -37,7 +37,7 @@ If you'd like to use those watch faces firstly make sure to follow [Watchy's Get
 ```sh
 git clone https://github.com/KasDudzik/BinaryStitchingFace.git
 ```
-3. Open the folder of the face you'd like to upload (_not whole repo foler!_) using PlatformIO or IDE with PlatformIO extension. The dependencies should downolad automatically.
+3. Open the folder of the face you'd like to upload (<ins>not whole repo foler!</ins>) using PlatformIO or IDE with PlatformIO extension. The dependencies should downolad automatically.
 5. Connect your Watchy via USB.
 4. Upload the face 
 ```sh
