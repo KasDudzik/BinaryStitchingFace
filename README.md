@@ -13,12 +13,12 @@ There are two versions of this face:
 ### Basic Face
 This version translates decimal numbers representing current hour and minute into binary numbers.
 
-![preview](basic_preview.jpg =500x)
+<img src="basic_preview.jpg" height="400">
 
 ### Version Two
 This version individually translates every decimal digit representing current hour and minute into binary numbers. So first 4 bits are tens, and next 4 bits are units. It's easier to read than the Basic version. 
 
-![preview](v2_preview.jpg =500x)
+<img src="v2_preview.jpg" height="400">
 	
 ## Technologies
 Project is created with:
